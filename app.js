@@ -1,12 +1,12 @@
 $(document).ready(function(){
 
 //CRUD
-function getToDos (idx) {
-  return toDoData(idx);
+function getToDos () {
+  return toDoData;
 }
 
 function addToDos (newToDo) {
-  return toDoData[0].toDoList.push(newToDo);
+  toDoData.push(newToDo);
 }
 
 function deleteToDo(idx) {
@@ -17,7 +17,7 @@ function editToDo (idx) {
   return toDoData(idx).toDoItems(idx);
 }
 
-});
+
 
 //ADDING/EDITS ON
 
@@ -33,9 +33,9 @@ function addToDoToDom (toDoData, templateStr, $target) {
   $target.append(tmpl(toDoData));
 }
 
-function addAllToDosToDom (arr) {
+function addAllToDosToDom (ar) {
   $('.main-section').html ('');
-  _.each(getToDoFromDom(), function (el, idx){
+  _.each(getToDos (), function (el, idx){
     el.idx = idx;
     addToDoToDom(el, templates.toDo, $('.main-content'));
   })
@@ -45,7 +45,9 @@ $('form').on('submit', function (event){ //click event
   event.preventDefault();
   var newToDo = getToDoFromDom (); //getting input
   console.log(newToDo); // logging input
-  addToDos(newToDo); // adding to data array
+  addToDos(newToDo); // adding to array
   addAllToDosToDom(getToDos()); //adding back all the To Dos
   $('input').val(''); //clearing input
 })
+
+});
