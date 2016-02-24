@@ -25,29 +25,41 @@ function getToDoFromDom () {
   var content = $('input[name="to-do-item"]').val();
   return {
     content: content,
-  }
+  };
 }
 
-function addToDoToDom (toDoData, templateStr, $target) {
-  var tmpl = _.template(templateStr);
-  $target.append(tmpl(toDoData));
+// function addToDoToDom (toDoData, templateStr, $target) {
+//   var tmpl = _.template(templateStr);
+//   $target.append(tmpl(toDoData));
+// }
+//
+// function addAllToDosToDom (ar) {
+//   $('.main-section').html('');
+//   _.each(getToDos(), function(el){
+//     addToDoToDom(el, templates.toDo, $('.main-section'))
+//   })
+// }
+
+function addToDo () {
+  var text = $(".to-do-input").val();
+  $("#todolist").append("<li><input type='checkbox'class ='done'/>"+text+"</li>");
 }
 
-function addAllToDosToDom (ar) {
-  $('.main-section').html ('');
-  _.each(getToDos (), function (el, idx){
-    el.idx = idx;
-    addToDoToDom(el, templates.toDo, $('.main-content'));
-  })
-}
-
+//ADDING NEW TASK AND PUTTING INTO ARRAY
 $('form').on('submit', function (event){ //click event
   event.preventDefault();
+  addToDo ();
   var newToDo = getToDoFromDom (); //getting input
   console.log(newToDo); // logging input
   addToDos(newToDo); // adding to array
-  addAllToDosToDom(getToDos()); //adding back all the To Dos
+  var random = getToDos();
+  console.log (random);
   $('input').val(''); //clearing input
-})
-
 });
+
+///trying to figure out strikethrough
+// $('.done').on('click', finishItem () {
+//   $(this).parent.css("text-decoration", "line-through");
+// });
+
+}); //end of document read
