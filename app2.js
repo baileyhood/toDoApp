@@ -48,6 +48,12 @@ function addAllTodos(arr) {
   });
 }
 
+//COUNTER
+function counter ()
+{$('h2').text(toDoList.length);}
+
+function counterTakeOut ()
+{$('h2').text(toDoList.length);}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -60,6 +66,7 @@ $(document).ready(function(){
     addToDo(newToDo);
     addAllTodos(getToDos());
     $('input[name="to-do-item"]').val('');
+    counter();
   });
 
 //DELETING TASKS
@@ -84,20 +91,26 @@ $('.task-list-area').on('dblclick', '.task-list', function () {
    toDoList[indexOfOurTodo].complete = !toDoList[indexOfOurTodo].complete;
  });
 
+ //CLEAR COMPLETED
+
+ $(".clear-completed").on('click', function(){
+   console.log ($(this));
+   event.preventDefault();
+   var completedArr = _.where(toDoList, {complete:true});
+   completedArr.forEach(function(el) {
+     deletePost(toDoList.indexOf(el));
+   });
+   addAllTodos(getToDos());
+   counterTakeOut ();
+   });
+
+ });
 
 //FILTER TO-DO ITEMS BY ALL/ACTIVE/COMPLETED
-$('#viewCompleted').on('click', function (event){
+$('#viewAll').on('click', function (event){
   event.preventDefault();
-  var completedArr = _.where(toDoList, {complete:true});
-  console.log (completedArr);
-  function addAllCompletedDos(arr) {
-    $('.task-list-area').html('');
-    _.each(completedArr, function (el, idx){
-      el.idx = idx;
-      addToDoToDom(el, templates.toDoTmpl, $ ('.task-list-area'));
-    });
-  }
-  addAllCompletedDos(completedArr);
+  addAllTodos(getToDos());
+});
 
 
 $('#viewActive').on('click', function (event){
@@ -114,9 +127,9 @@ $('#viewActive').on('click', function (event){
   addAllCompletedDos(completedArr);
 });
 
-$('#viewAll').on('click', function (event){
+$('#viewCompleted').on('click', function (event){
   event.preventDefault();
-  var completedArr = _.where(toDoList, {complete:false && true});
+  var completedArr = _.where(toDoList, {complete:true});
   console.log (completedArr);
   function addAllCompletedDos(arr) {
     $('.task-list-area').html('');
@@ -126,21 +139,5 @@ $('#viewAll').on('click', function (event){
     });
   }
   addAllCompletedDos(completedArr);
-});
 
-});
-
-//CLEAR COMPLETED
-
-$(".clear-completed").on('click', function(){
-  console.log ($(this));
-  event.preventDefault();
-  var completedArr = _.where(toDoList, {complete:true});
-  completedArr.forEach(function(el) {
-    deletePost(toDoList.indexOf(el));
-  });
-  addAllTodos(getToDos());
-  });
-});
-
-//COUNTER
+});///end of doc ready
