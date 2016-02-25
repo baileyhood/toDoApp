@@ -1,6 +1,9 @@
 li {
   list-style-type: none; }
 
+.inactive {
+  display: none; }
+
 .done:checked {
   text-decoration: line-through; }
 

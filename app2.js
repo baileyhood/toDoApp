@@ -2,10 +2,9 @@
 var toDoList = [];
 var templates = {
     toDoTmpl: [
-      "<div data-idx='<%= idx %>' class ='todo'>",
+      "<div class ='todo'>",
       "<ul>",
-      "<li><input type='checkbox'class ='done'/><%= content %></li>",
-      "<button class='delete'>delete</button>",
+      "<li class= 'task-list' data-idx='<%= idx %>'><input type='checkbox'class ='done'/><%= content %></li>",
       "</ul>",
       "</div>"].join("")
   };
@@ -40,8 +39,6 @@ function getToDoFromDom() {
   };
 }
 
-
-
 //ADDS ALL THE TO DOS TO THE DOM
 function addAllTodos(arr) {
   $('.task-list-area').html('');
@@ -50,6 +47,32 @@ function addAllTodos(arr) {
     addToDoToDom(el, templates.toDoTmpl, $('.task-list-area'));
   });
 }
+
+//FILTER ALL TODOS BY COMPLETED
+function getCompleted () {
+  var completedToDos = _.filter(getToDos(), function (todo) {
+    return todo.completed === true;
+  });
+  return completedTodos;
+}
+
+//FILTER ALL TODOS BY ACTIVE
+function getActive () {
+  var activeToDos = _.filter(getToDos(), function (todo) {
+    return todo.completed === false;
+  });
+  return completedTodos;
+}
+
+function addCompletedTodos(arr, area) {
+  // area.html("");
+  _.each(arr, function(el,index) {
+    el.idx = index;
+    addToDoToDom(el,templates.toDoTmpl, $target);
+  });
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function(){
 //ADDING TASKS
@@ -70,5 +93,27 @@ $(document).ready(function(){
   //  numberChange(getTodo(), $('span'));
  });
 
+
+//CONVERTING TRUE TO FALSE WHEN CLICKED: when checking off to do,
+//this converts it to false.
+ $('body').on('click', '.done', function (event) {
+   var indexOfOurTodo = $(this).parent().data('idx');
+   console.log(indexOfOurTodo);
+   toDoList[indexOfOurTodo].complete = !toDoList[indexOfOurTodo].complete;
+ });
+
+
+//FILTER TO-DO ITEMS BY ALL/ACTIVE/COMPLETED
+$('body').on('click', "#viewCompleted", function (event){
+  var completedArr = [];
+  completedArr = toDoList.filter(function(el,idx){
+    toDoList[idx].idx= idx;
+    return el.completed === true;
+  });
+  console.log(completedArr);
+  addCompletedTodos (completedArr, '.completed-area');
+  $('.task-list-area').addClass('.inactive');
+  $('.completed-area').removeClass('.inactive');
+});
 
 });
