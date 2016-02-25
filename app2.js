@@ -1,5 +1,6 @@
 
 var toDoList = [];
+
 var templates = {
     toDoTmpl: [
       "<div class ='todo'>",
