@@ -48,29 +48,6 @@ function addAllTodos(arr) {
   });
 }
 
-//FILTER ALL TODOS BY COMPLETED
-function getCompleted () {
-  var completedToDos = _.filter(getToDos(), function (todo) {
-    return todo.completed === true;
-  });
-  return completedTodos;
-}
-
-//FILTER ALL TODOS BY ACTIVE
-function getActive () {
-  var activeToDos = _.filter(getToDos(), function (todo) {
-    return todo.completed === false;
-  });
-  return completedTodos;
-}
-
-function addCompletedTodos(arr, area) {
-  // area.html("");
-  _.each(arr, function(el,index) {
-    el.idx = index;
-    addToDoToDom(el,templates.toDoTmpl, $target);
-  });
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -93,6 +70,11 @@ $(document).ready(function(){
   //  numberChange(getTodo(), $('span'));
  });
 
+//EDITING TASKS
+$('.task-list-area').on('dblclick', '.task-list', function () {
+   $('.task-list').attr('contenteditable','true');
+});
+
 
 //CONVERTING TRUE TO FALSE WHEN CLICKED: when checking off to do,
 //this converts it to false.
@@ -104,16 +86,18 @@ $(document).ready(function(){
 
 
 //FILTER TO-DO ITEMS BY ALL/ACTIVE/COMPLETED
-$('body').on('click', "#viewCompleted", function (event){
-  var completedArr = [];
-  completedArr = toDoList.filter(function(el,idx){
-    toDoList[idx].idx= idx;
-    return el.completed === true;
-  });
-  console.log(completedArr);
-  addCompletedTodos (completedArr, '.completed-area');
-  $('.task-list-area').addClass('.inactive');
-  $('.completed-area').removeClass('.inactive');
+$('#viewCompleted').on('click', function (event){
+  event.preventDefault();
+  var completedArr = _.where(toDoList, {complete:true});
+  console.log (completedArr);
+  function addAllCompletedDos(arr) {
+    $('.task-list-area').html('');
+    _.each(completedArr, function (el, idx){
+      el.idx = idx;
+      addToDoToDom(el, templates.toDoTmpl, $ ('.task-list-area'));
+    });
+  }
+  addAllCompletedDos(completedArr);
 });
 
 });
