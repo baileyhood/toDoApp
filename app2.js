@@ -98,6 +98,49 @@ $('#viewCompleted').on('click', function (event){
     });
   }
   addAllCompletedDos(completedArr);
+
+
+$('#viewActive').on('click', function (event){
+  event.preventDefault();
+  var completedArr = _.where(toDoList, {complete:false});
+  console.log (completedArr);
+  function addAllCompletedDos(arr) {
+    $('.task-list-area').html('');
+    _.each(completedArr, function (el, idx){
+      el.idx = idx;
+      addToDoToDom(el, templates.toDoTmpl, $ ('.task-list-area'));
+    });
+  }
+  addAllCompletedDos(completedArr);
+});
+
+$('#viewAll').on('click', function (event){
+  event.preventDefault();
+  var completedArr = _.where(toDoList, {complete:false && true});
+  console.log (completedArr);
+  function addAllCompletedDos(arr) {
+    $('.task-list-area').html('');
+    _.each(completedArr, function (el, idx){
+      el.idx = idx;
+      addToDoToDom(el, templates.toDoTmpl, $ ('.task-list-area'));
+    });
+  }
+  addAllCompletedDos(completedArr);
 });
 
 });
+
+//CLEAR COMPLETED
+
+$(".clear-completed").on('click', function(){
+  console.log ($(this));
+  event.preventDefault();
+  var completedArr = _.where(toDoList, {complete:true});
+  completedArr.forEach(function(el) {
+    deletePost(toDoList.indexOf(el));
+  });
+  addAllTodos(getToDos());
+  });
+});
+
+//COUNTER
