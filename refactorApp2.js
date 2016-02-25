@@ -1,4 +1,3 @@
-
 var toDoList = [];
 
 var templates = {
@@ -9,6 +8,24 @@ var templates = {
       "</ul>",
       "</div>"].join("")
   };
+
+
+$(document).ready(function(){
+
+toDoPage.init();
+
+});///end of doc ready
+
+var toDoPage = {
+
+init: function () {
+  toDoPage.styling();
+  toDoPage.events();
+},
+
+styling: function () {
+  toDoPage.addToDoToDom ()
+}
 
 
 //GRABBING THE NEW ARRAY WITH NEW TO DO
@@ -51,32 +68,12 @@ function addAllTodos(arr) {
 
 //COUNTER
 function counter ()
-{$('h2').text(toDoList.length + " items left");
-if (toDoList.length < 1) {
-  $('h2').hide();
-  }
-else {$('h2').show();
-}
-}
+{$('h2').text(toDoList.length);}
 
 function counterTakeOut ()
-{$('h2').text(toDoList.length + " items left");
-if (toDoList.length < 1) {
-  $('h2').hide();
-  }
-else {$('h2').show();
-}
-}
+{$('h2').text(toDoList.length);}
 
-//STRIKE THROUGH
-$('body').on('click', 'input[type=checkbox]', function(event) {
-  event.preventDefault;
-  $(this).parent().toggleClass('checked');
-});
 
-////////////////////////////////////////////////////////////////////////////////
-
-$(document).ready(function(){
 //ADDING TASKS
   $("form").on('submit', function (event) {
     event.preventDefault();
@@ -158,5 +155,3 @@ $('#viewCompleted').on('click', function (event){
     });
   }
   addAllCompletedDos(completedArr);
-
-});///end of doc ready

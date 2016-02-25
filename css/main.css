@@ -7,6 +7,9 @@ body {
 .done:checked {
   text-decoration: line-through; }
 
+.checked {
+  text-decoration: line-through; }
+
 h1 {
   text-align: center;
   font-size: 6em;
@@ -14,7 +17,8 @@ h1 {
   margin-top: 0;
   margin-bottom: 28px;
   color: white;
-  border-bottom: 8px solid #24694C; }
+  border-bottom: 8px solid #24694C;
+  padding: 8px 0; }
 
 #todolist {
   list-style-type: none; }
@@ -60,3 +64,23 @@ nav li:hover {
 
 .todo .task-list {
   text-align: center; }
+
+h2 {
+  font-size: 1em;
+  font-size: 1.3em;
+  color: #33B17C; }
+
+.clear-completed {
+  text-align: center;
+  color: #33B17C;
+  cursor: pointer;
+  font-weight: bold; }
+
+.done {
+  background-color: red; }
+
+.clear-section {
+  position: fixed;
+  width: 100%;
+  top: 91.3%;
+  background-color: #E4E4E4; }
